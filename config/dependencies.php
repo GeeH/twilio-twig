@@ -31,7 +31,7 @@ return static function (ContainerBuilder $containerBuilder, array $settings) {
             $settings = $c->get('settings');
             $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../view');
             $twig = new \Twig\Environment($loader, [
-                __DIR__ . '/../var/cache'
+                'cache' => __DIR__ . '/../var/cache'
             ]);
             if ($settings['app_env'] === 'DEVELOPMENT') {
                 $twig->enableDebug();
