@@ -14,8 +14,7 @@ return static function (ContainerBuilder $containerBuilder, array $settings) {
         'settings' => $settings,
 
         LoggerInterface::class => function (ContainerInterface $c): Logger {
-            
-
+            $settings = $c->get('settings');
             $loggerSettings = $settings['logger'];
             $logger = new Logger($loggerSettings['name']);
 
