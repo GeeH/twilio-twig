@@ -15,7 +15,6 @@ return static function (ContainerBuilder $containerBuilder, array $settings) {
 
         LoggerInterface::class => function (ContainerInterface $c): Logger {
             $settings = $c->get('settings');
-
             $loggerSettings = $settings['logger'];
             $logger = new Logger($loggerSettings['name']);
 
@@ -28,10 +27,11 @@ return static function (ContainerBuilder $containerBuilder, array $settings) {
             return $logger;
         },
 
-        \Twig\Environment::class => function (ContainerInterface $c) use ($settings): Environment {
-            $loader = new Twig\Loader\FilesystemLoader(__DIR__ . '/../view');
-            $twig = new Twig\Environment($loader, [
-                __DIR__ . '/../var/cache'
+        \Twig\Environment::class => function (ContainerInterface $c) : \Twig\Environment {
+            $settings = $c->get('settings');
+            $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../view');
+            $twig = new \Twig\Environment($loader, [
+                'cache' => __DIR__ . '/../var/cache'
             ]);
             if ($settings['app_env'] === 'DEVELOPMENT') {
                 $twig->enableDebug();
